@@ -1,8 +1,8 @@
 {
 	"name": "AzureKeyVault_LS",
 	"properties": {
-		"annotations": [],
 		"type": "AzureKeyVault",
+		"annotations": [],
 		"typeProperties": {
 			"baseUrl": "{@linkedService().KeyVault_Url}"
 		}
