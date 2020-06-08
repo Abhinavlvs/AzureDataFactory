@@ -1,0 +1,45 @@
+{
+	"name": "BlobStore_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStore_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ContainerName": {
+				"type": "string",
+				"defaultValue": "blobcont01"
+			},
+			"FolderPath": {
+				"type": "string"
+			},
+			"FilePath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FilePath",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().FolderPath",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().ContainerName",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
