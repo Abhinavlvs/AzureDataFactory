@@ -7,12 +7,13 @@
 		},
 		"parameters": {
 			"OnPremSQLSrvr_Table_Schema": {
-				"type": "String",
-				"defaultValue": "dbo"
+				"type": "String"
 			},
 			"OnPremSQLSrvr_Table_Name": {
-				"type": "String",
-				"defaultValue": "students"
+				"type": "String"
+			},
+			"OnPremSQLSrvr_DB_Name": {
+				"type": "string"
 			}
 		},
 		"annotations": [],

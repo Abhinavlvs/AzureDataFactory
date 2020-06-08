@@ -1,0 +1,90 @@
+{
+	"name": "SQLSrvrToBlobStore",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyData",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "OnPremSQLSrvr_DS",
+						"type": "DatasetReference",
+						"parameters": {
+							"OnPremSQLSrvr_Table_Schema": {
+								"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Schema",
+								"type": "Expression"
+							},
+							"OnPremSQLSrvr_Table_Name": {
+								"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Name",
+								"type": "Expression"
+							},
+							"OnPremSQLSrvr_DB_Name": {
+								"value": "@pipeline().parameters.OnPremSQLSrvr_DB_Name",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BlobStore_DS",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "blobcont01",
+							"FileName": {
+								"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Name",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"OnPremSQLSrvr_Table_Schema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"OnPremSQLSrvr_Table_Name": {
+				"type": "string",
+				"defaultValue": "station"
+			},
+			"BlobContainerName": {
+				"type": "string",
+				"defaultValue": "blobcont01"
+			},
+			"OnPremSQLSrvr_DB_Name": {
+				"type": "string",
+				"defaultValue": "TestDB"
+			}
+		},
+		"annotations": []
+	}
+}

@@ -7,13 +7,9 @@
 		},
 		"parameters": {
 			"ContainerName": {
-				"type": "string",
-				"defaultValue": "blobcont01"
-			},
-			"FolderPath": {
 				"type": "string"
 			},
-			"FilePath": {
+			"FileName": {
 				"type": "string"
 			}
 		},
@@ -23,11 +19,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().FilePath",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().FolderPath",
+					"value": "@concat(dataset().FileName,utcnow(),'.csv')",
 					"type": "Expression"
 				},
 				"container": {
