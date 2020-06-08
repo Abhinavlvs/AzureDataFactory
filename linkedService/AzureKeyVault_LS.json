@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://AzKeyStr.vault.azure.net/"
+			"baseUrl": "https://@linkedService().BlobStore_Name.vault.azure.net/"
 		}
 	}
 }
