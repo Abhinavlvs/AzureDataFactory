@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLSrvr_LS'"
 		},
+		"AzureBlobStore_LS_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://azblobstrg.blob.core.windows.net"
+		},
 		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AzKeyStr.vault.azure.net/"
@@ -20,6 +24,19 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStore_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"serviceEndpoint": "[parameters('AzureBlobStore_LS_properties_typeProperties_serviceEndpoint')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureKeyVault_LS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -42,6 +59,48 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BlobStore_DS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStore_LS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ContainerName": {
+						"type": "string"
+					},
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(dataset().FileName,utcnow(),'.csv')",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().ContainerName",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStore_LS')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OnPremSQLSrvr_LS')]",
@@ -99,17 +158,17 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "OnPremSQLSrvr_LS",
-					"type": "LinkedServiceReference",
-					"parameters": {}
+					"type": "LinkedServiceReference"
 				},
 				"parameters": {
 					"OnPremSQLSrvr_Table_Schema": {
-						"type": "String",
-						"defaultValue": "dbo"
+						"type": "String"
 					},
 					"OnPremSQLSrvr_Table_Name": {
-						"type": "String",
-						"defaultValue": "students"
+						"type": "String"
+					},
+					"OnPremSQLSrvr_DB_Name": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -138,6 +197,102 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/OnPremSQLSrvr_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLSrvrToBlobStore')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyData",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OnPremSQLSrvr_DS",
+								"type": "DatasetReference",
+								"parameters": {
+									"OnPremSQLSrvr_Table_Schema": {
+										"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Schema",
+										"type": "Expression"
+									},
+									"OnPremSQLSrvr_Table_Name": {
+										"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Name",
+										"type": "Expression"
+									},
+									"OnPremSQLSrvr_DB_Name": {
+										"value": "@pipeline().parameters.OnPremSQLSrvr_DB_Name",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "BlobStore_DS",
+								"type": "DatasetReference",
+								"parameters": {
+									"ContainerName": "blobcont01",
+									"FileName": {
+										"value": "@pipeline().parameters.OnPremSQLSrvr_Table_Name",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"OnPremSQLSrvr_Table_Schema": {
+						"type": "string",
+						"defaultValue": "dbo"
+					},
+					"OnPremSQLSrvr_Table_Name": {
+						"type": "string",
+						"defaultValue": "station"
+					},
+					"BlobContainerName": {
+						"type": "string",
+						"defaultValue": "blobcont01"
+					},
+					"OnPremSQLSrvr_DB_Name": {
+						"type": "string",
+						"defaultValue": "TestDB"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OnPremSQLSrvr_DS')]",
+				"[concat(variables('factoryId'), '/datasets/BlobStore_DS')]"
 			]
 		}
 	]

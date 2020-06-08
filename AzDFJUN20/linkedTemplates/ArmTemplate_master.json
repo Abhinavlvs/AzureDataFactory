@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLSrvr_LS'"
 		},
+		"AzureBlobStore_LS_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://azblobstrg.blob.core.windows.net"
+		},
 		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AzKeyStr.vault.azure.net/"
@@ -44,6 +48,9 @@
 					},
 					"OnPremSQLSrvr_LS_connectionString": {
 						"value": "[parameters('OnPremSQLSrvr_LS_connectionString')]"
+					},
+					"AzureBlobStore_LS_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('AzureBlobStore_LS_properties_typeProperties_serviceEndpoint')]"
 					},
 					"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault_LS_properties_typeProperties_baseUrl')]"

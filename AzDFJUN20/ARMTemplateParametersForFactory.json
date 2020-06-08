@@ -8,6 +8,9 @@
 		"OnPremSQLSrvr_LS_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStore_LS_properties_typeProperties_serviceEndpoint": {
+			"value": "https://azblobstrg.blob.core.windows.net"
+		},
 		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 			"value": "https://AzKeyStr.vault.azure.net/"
 		}

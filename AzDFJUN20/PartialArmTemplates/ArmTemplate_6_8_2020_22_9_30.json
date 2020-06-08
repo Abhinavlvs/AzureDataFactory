@@ -6,18 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDFJUN20"
-		},
-		"OnPremSQLSrvr_LS_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OnPremSQLSrvr_LS'"
-		},
-		"AzureBlobStore_LS_properties_typeProperties_serviceEndpoint": {
-			"type": "string",
-			"defaultValue": "https://azblobstrg.blob.core.windows.net"
-		},
-		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://AzKeyStr.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -206,9 +194,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OnPremSQLSrvr_LS')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureBlobStore_LS')]",
@@ -218,80 +204,8 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"serviceEndpoint": "[parameters('AzureBlobStore_LS_properties_typeProperties_serviceEndpoint')]"
+					"serviceEndpoint": "https://azblobstrg.blob.core.windows.net"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault_LS_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OnPremSQLSrvr_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"OnPremSQLSrvr_Name": {
-						"type": "String",
-						"defaultValue": "ALPHA\\SQLEXPRESS01"
-					},
-					"OnPremSQLSrvr_DB_Name": {
-						"type": "String",
-						"defaultValue": "TestDB"
-					},
-					"OnPremSQLSrvr_UserName": {
-						"type": "String",
-						"defaultValue": "adfuser"
-					},
-					"OnPremSQLSrvr_Password_KV_SecretName": {
-						"type": "String",
-						"defaultValue": "OnPremSQLSrvr-Password"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('OnPremSQLSrvr_LS_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault_LS",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": {
-							"value": "@linkedService().OnPremSQLSrvr_Password_KV_SecretName",
-							"type": "Expression"
-						}
-					}
-				},
-				"connectVia": {
-					"referenceName": "SelfHostedIR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedIR')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault_LS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SelfHostedIR')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		}
