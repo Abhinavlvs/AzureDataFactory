@@ -1,0 +1,48 @@
+{
+	"name": "OnPremSQLSrvr_LS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Database_Name": {
+				"type": "String",
+				"defaultValue": "TestDB"
+			},
+			"OnPremSQLSrvr_Name": {
+				"type": "String",
+				"defaultValue": "ALPHA\\SQLEXPRESS01"
+			},
+			"OnPremSQLSrvr_DB_Name": {
+				"type": "String",
+				"defaultValue": "TestDB"
+			},
+			"OnPremSQLSrvr_UserName": {
+				"type": "String",
+				"defaultValue": "adfuser"
+			},
+			"OnPremSQLSrvr_Password_KV_SecretName": {
+				"type": "String",
+				"defaultValue": "OnPremSQLSrvr-Password"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Data Source=@{linkedService().OnPremSQLSrvr_Name};Initial Catalog=@{linkedService().OnPremSQLSrvr_DB_Name};User ID=@{linkedService().OnPremSQLSrvr_UserName}",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault_LS",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": {
+					"value": "@linkedService().OnPremSQLSrvr_Password_KV_SecretName",
+					"type": "Expression"
+				}
+			}
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
