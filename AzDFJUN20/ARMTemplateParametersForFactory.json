@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "AzDFJUN20"
 		},
+		"OnPremSQLSrvr_LS_connectionString": {
+			"value": ""
+		},
 		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 			"value": "https://AzKeyStr.vault.azure.net/"
 		}

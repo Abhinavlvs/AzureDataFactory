@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDFJUN20"
 		},
+		"OnPremSQLSrvr_LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnPremSQLSrvr_LS'"
+		},
 		"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AzKeyStr.vault.azure.net/"
@@ -37,6 +41,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"OnPremSQLSrvr_LS_connectionString": {
+						"value": "[parameters('OnPremSQLSrvr_LS_connectionString')]"
 					},
 					"AzureKeyVault_LS_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault_LS_properties_typeProperties_baseUrl')]"
