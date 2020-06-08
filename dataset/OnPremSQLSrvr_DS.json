@@ -1,0 +1,42 @@
+{
+	"name": "OnPremSQLSrvr_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnPremSQLSrvr_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"OnPremSQLSrvr_Table_Schema": {
+				"type": "String",
+				"defaultValue": "dbo"
+			},
+			"OnPremSQLSrvr_Table_Name": {
+				"type": "String",
+				"defaultValue": "students"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "student_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "student_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().OnPremSQLSrvr_Table_Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().OnPremSQLSrvr_Table_Name",
+				"type": "Expression"
+			}
+		}
+	}
+}
