@@ -39,8 +39,14 @@
 								"referenceName": "DS_AzDataLakeStr",
 								"type": "DatasetReference",
 								"parameters": {
-									"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
-									"Contianer": "dlcont01",
+									"DataLakeURI": {
+										"value": "@pipeline().parameters.SourceDataLake",
+										"type": "Expression"
+									},
+									"Contianer": {
+										"value": "@pipeline().parameters.SourceContainer",
+										"type": "Expression"
+									},
 									"Directory": "@concat('')",
 									"File": "@concat('')"
 								}
@@ -112,16 +118,7 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "@{'dlcont01'}/@{concat('')}/@{item().name}"
-										},
-										{
-											"name": "Destination",
-											"value": "@{'container-02'}/@{'migrated'}/@{concat('')}"
-										}
-									],
+									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "DelimitedTextSource",
@@ -151,8 +148,14 @@
 											"referenceName": "DS_AzDataLakeStr",
 											"type": "DatasetReference",
 											"parameters": {
-												"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
-												"Contianer": "dlcont01",
+												"DataLakeURI": {
+													"value": "@pipeline().parameters.SourceDataLake",
+													"type": "Expression"
+												},
+												"Contianer": {
+													"value": "@pipeline().parameters.SourceContainer",
+													"type": "Expression"
+												},
 												"Directory": "@concat('')",
 												"File": {
 													"value": "@item().name",
@@ -166,9 +169,15 @@
 											"referenceName": "DS_AzDataLakeStr",
 											"type": "DatasetReference",
 											"parameters": {
-												"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
-												"Contianer": "container-02",
-												"Directory": "@concat('')",
+												"DataLakeURI": {
+													"value": "@pipeline().parameters.DestinationDataLake",
+													"type": "Expression"
+												},
+												"Contianer": {
+													"value": "@pipeline().parameters.DestinationContainer",
+													"type": "Expression"
+												},
+												"Directory": "NewMigration",
 												"File": "@concat('')"
 											}
 										}
@@ -178,6 +187,24 @@
 						}
 					}
 				],
+				"parameters": {
+					"SourceContainer": {
+						"type": "string",
+						"defaultValue": "dlcont01"
+					},
+					"DestinationContainer": {
+						"type": "string",
+						"defaultValue": "outcontainer"
+					},
+					"SourceDataLake": {
+						"type": "string",
+						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+					},
+					"DestinationDataLake": {
+						"type": "string",
+						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+					}
+				},
 				"variables": {
 					"Dump": {
 						"type": "String"
