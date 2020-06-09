@@ -37,8 +37,8 @@
 				}
 			},
 			{
-				"name": "ForEachItem",
-				"type": "ForEach",
+				"name": "FilterOnFile",
+				"type": "Filter",
 				"dependsOn": [
 					{
 						"activity": "GetMetadata",
@@ -53,13 +53,103 @@
 						"value": "@activity('GetMetadata').output.childItems",
 						"type": "Expression"
 					},
-					"batchCount": 2,
+					"condition": {
+						"value": "@equals(item().type,'File')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEachFile",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FilterOnFile",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FilterOnFile').output.value",
+						"type": "Expression"
+					},
+					"batchCount": 5,
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "Copydata",
+							"type": "Copy",
 							"dependsOn": [],
-							"userProperties": []
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{'dlcont01'}/@{concat('')}/@{item().name}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{'container-02'}/@{'migrated'}/@{concat('')}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_AzDataLakeStr",
+									"type": "DatasetReference",
+									"parameters": {
+										"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
+										"Contianer": "dlcont01",
+										"Directory": "@concat('')",
+										"File": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_AzDataLakeStr",
+									"type": "DatasetReference",
+									"parameters": {
+										"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
+										"Contianer": "container-02",
+										"Directory": "migrated",
+										"File": "@concat('')"
+									}
+								}
+							]
 						}
 					]
 				}
