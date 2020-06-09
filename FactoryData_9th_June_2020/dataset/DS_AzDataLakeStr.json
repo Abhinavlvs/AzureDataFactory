@@ -18,11 +18,11 @@
 			},
 			"Contianer": {
 				"type": "string",
-				"defaultValue": "dlcont01"
+				"defaultValue": "@concat('')"
 			},
 			"FilePath": {
 				"type": "string",
-				"defaultValue": "DimReseller.csv"
+				"defaultValue": "@concat('')"
 			}
 		},
 		"annotations": [],
