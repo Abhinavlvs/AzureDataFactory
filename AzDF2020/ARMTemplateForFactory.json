@@ -168,7 +168,7 @@
 											"parameters": {
 												"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
 												"Contianer": "container-02",
-												"Directory": "migrated",
+												"Directory": "@concat('')",
 												"File": "@concat('')"
 											}
 										}
