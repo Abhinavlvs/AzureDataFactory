@@ -1,0 +1,35 @@
+{
+	"name": "DS_AzDataLakeStr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzDataLakeStr",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DataLakeURI": {
+				"type": "string",
+				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+			},
+			"Contianer": {
+				"type": "string",
+				"defaultValue": "dlcont01"
+			},
+			"FilePath": {
+				"type": "string",
+				"defaultValue": "DimReseller.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
