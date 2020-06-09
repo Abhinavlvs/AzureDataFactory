@@ -121,7 +121,9 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"DataLakeURI": "https://azdatalakeg2.dfs.core.windows.net",
-									"Contianer": "dlcont01"
+									"Contianer": "dlcont01",
+									"Directory": "@concat('')",
+									"File": "@concat('')"
 								}
 							},
 							"fieldList": [
@@ -130,7 +132,8 @@
 								"itemType"
 							],
 							"storeSettings": {
-								"type": "AzureBlobFSReadSettings"
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true
 							},
 							"formatSettings": {
 								"type": "DelimitedTextReadSettings"
