@@ -1,0 +1,17 @@
+{
+	"name": "LS_AzDataLakeStr",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureBlobFS",
+		"annotations": [],
+		"parameters": {
+			"BlobUrl": {
+				"type": "string",
+				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+			}
+		},
+		"typeProperties": {
+			"url": "@linkedService().BlobUrl"
+		}
+	}
+}
