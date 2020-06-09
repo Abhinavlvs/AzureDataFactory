@@ -19,10 +19,6 @@
 			"Contianer": {
 				"type": "string",
 				"defaultValue": "@concat('')"
-			},
-			"FilePath": {
-				"type": "string",
-				"defaultValue": "@concat('')"
 			}
 		},
 		"annotations": [],
@@ -30,6 +26,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat('')",
+					"type": "Expression"
+				},
 				"folderPath": "input",
 				"fileSystem": {
 					"value": "@dataset().Contianer",
