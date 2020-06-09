@@ -30,7 +30,7 @@
 					"value": "@concat('')",
 					"type": "Expression"
 				},
-				"folderPath": "input",
+				"folderPath": "@concat('')",
 				"fileSystem": {
 					"value": "@dataset().Contianer",
 					"type": "Expression"
