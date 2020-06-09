@@ -56,21 +56,20 @@
 					"batchCount": 2,
 					"activities": [
 						{
-							"name": "IsFile",
-							"type": "IfCondition",
+							"name": "Set variable1",
+							"type": "SetVariable",
 							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"expression": {
-									"value": "equals(item().type,'File')",
-									"type": "Expression"
-								}
-							}
+							"userProperties": []
 						}
 					]
 				}
 			}
 		],
+		"variables": {
+			"Dump": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
