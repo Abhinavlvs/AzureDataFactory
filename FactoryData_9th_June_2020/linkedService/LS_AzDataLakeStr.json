@@ -1,6 +1,5 @@
 {
 	"name": "LS_AzDataLakeStr",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"type": "AzureBlobFS",
 		"annotations": [],
