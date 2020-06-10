@@ -16,52 +16,22 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "DS_AzureDataLakeG2",
+						"referenceName": "DS_OnPrem_SQLserver",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": {
-								"value": "@pipeline().parameters.SourceContianer",
-								"type": "Expression"
-							},
-							"DataLakeURI": {
-								"value": "@pipeline().parameters.DataLakeURI",
-								"type": "Expression"
-							}
+							"Database": "TestDB",
+							"Schema": "dbo",
+							"Table": "employee"
 						}
 					},
 					"firstRowOnly": false
 				}
 			}
 		],
-		"parameters": {
-			"DataLakeURI": {
-				"type": "string",
-				"defaultValue": "https://azdlgv2.dfs.core.windows.net"
-			},
-			"SourceContianer": {
-				"type": "string",
-				"defaultValue": "test"
-			},
-			"SourceFolder": {
-				"type": "string",
-				"defaultValue": "*"
-			},
-			"SourceFile": {
-				"type": "string",
-				"defaultValue": "*"
-			}
-		},
 		"annotations": []
 	}
 }
