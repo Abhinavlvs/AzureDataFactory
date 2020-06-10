@@ -1,0 +1,24 @@
+{
+	"name": "DS_OracleTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_OracleDB",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Table": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ORAUSER",
+			"table": {
+				"value": "@dataset().Table",
+				"type": "Expression"
+			}
+		}
+	}
+}
