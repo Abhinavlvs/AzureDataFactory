@@ -5,8 +5,7 @@
 		"annotations": [],
 		"parameters": {
 			"BlobServiceURI": {
-				"type": "string",
-				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+				"type": "string"
 			}
 		},
 		"typeProperties": {
