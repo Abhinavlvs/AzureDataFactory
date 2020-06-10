@@ -1,0 +1,20 @@
+{
+	"name": "DataCleansing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_AzureDataLakeG2",
+						"type": "DatasetReference"
+					},
+					"name": "DataLakeSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('roundRobin', 2)) ~> DataLakeSource"
+		}
+	}
+}
