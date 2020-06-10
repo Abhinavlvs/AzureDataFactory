@@ -5,7 +5,16 @@
 			"referenceName": "LS_AzureDataLakeG2",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"BlobServiceURI": "https://azdatalakeg2.dfs.core.windows.net"
+				"BlobServiceURI": {
+					"value": "@dataset().DataLakeURI",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"DataLakeURI": {
+				"type": "String",
+				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
 			}
 		},
 		"annotations": [],
