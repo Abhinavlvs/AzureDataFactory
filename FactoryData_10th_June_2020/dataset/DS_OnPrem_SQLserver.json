@@ -1,0 +1,39 @@
+{
+	"name": "DS_OnPrem_SQLserver",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_OnPremSQLServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Database": {
+					"value": "@dataset().Database",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"Database": {
+				"type": "String"
+			},
+			"Schema": {
+				"type": "String"
+			},
+			"Table": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().Table",
+				"type": "Expression"
+			}
+		}
+	}
+}
