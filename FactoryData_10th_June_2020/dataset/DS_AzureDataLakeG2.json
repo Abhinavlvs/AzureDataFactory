@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference",
 			"parameters": {
 				"BlobURI": {
-					"value": "@dataset().DataLakeURI",
+					"value": "https://azdlgv2.dfs.core.windows.net",
 					"type": "Expression"
 				}
 			}
@@ -27,8 +27,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": "Httpfile",
 				"fileSystem": {
-					"value": "@dataset().Container",
+					"value": "test",
 					"type": "Expression"
 				}
 			},
