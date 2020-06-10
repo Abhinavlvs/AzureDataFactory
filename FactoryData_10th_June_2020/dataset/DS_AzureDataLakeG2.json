@@ -17,6 +17,9 @@
 			},
 			"DataLakeURI": {
 				"type": "string"
+			},
+			"Folder": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -24,7 +27,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Http_file",
 				"fileSystem": {
 					"value": "@dataset().Container",
 					"type": "Expression"
