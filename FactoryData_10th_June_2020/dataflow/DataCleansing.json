@@ -14,7 +14,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionBy('roundRobin', 2)) ~> DataLakeSource"
+			"script": "parameters{\n\tContainer as string (\"test\")\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tpartitionBy('roundRobin', 2)) ~> DataLakeSource"
 		}
 	}
 }
