@@ -6,14 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF2020"
-		},
-		"LS_OnPremSQLServer_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_OnPremSQLServer'"
-		},
-		"LS_AzureDataLakeG2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@linkedService().BlobURI"
 		}
 	},
 	"variables": {
@@ -142,44 +134,10 @@
 					}
 				},
 				"typeProperties": {
-					"url": "[parameters('LS_AzureDataLakeG2_properties_typeProperties_url')]"
+					"url": "@linkedService().BlobURI"
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SelfHostedIR')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_OnPremSQLServer')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"Database": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_OnPremSQLServer_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "SelfHostedIR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedIR')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_OnPrem_SQLserver')]",
@@ -221,9 +179,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_OnPremSQLServer')]"
-			]
+			"dependsOn": []
 		}
 	]
 }

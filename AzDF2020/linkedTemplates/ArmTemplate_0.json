@@ -7,9 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF2020"
 		},
-		"LS_AzDataLakeStr_properties_typeProperties_url": {
+		"LS_OnPremSQLServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_OnPremSQLServer'"
+		},
+		"LS_AzureDataLakeG2_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "@linkedService().BlobUrl"
+			"defaultValue": "@linkedService().BlobURI"
 		}
 	},
 	"variables": {
@@ -17,55 +21,54 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_AzDataLakeStr')]",
+			"name": "[concat(parameters('factoryName'), '/LS_AzureDataLakeG2')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"type": "AzureBlobFS",
 				"annotations": [],
 				"parameters": {
-					"BlobUrl": {
-						"type": "string",
-						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+					"BlobURI": {
+						"type": "string"
 					}
 				},
 				"typeProperties": {
-					"url": "[parameters('LS_AzDataLakeStr_properties_typeProperties_url')]"
+					"url": "[parameters('LS_AzureDataLakeG2_properties_typeProperties_url')]"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_AzDataLakeStr')]",
+			"name": "[concat(parameters('factoryName'), '/SelfHostedIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_AzureDataLakeG2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_AzDataLakeStr",
+					"referenceName": "LS_AzureDataLakeG2",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"BlobUrl": {
+						"BlobURI": {
 							"value": "@dataset().DataLakeURI",
 							"type": "Expression"
 						}
 					}
 				},
 				"parameters": {
+					"Container": {
+						"type": "string"
+					},
 					"DataLakeURI": {
-						"type": "string",
-						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
-					},
-					"Contianer": {
-						"type": "string",
-						"defaultValue": "@concat('')"
-					},
-					"Directory": {
-						"type": "string",
-						"defaultValue": "@concat('')"
-					},
-					"File": {
-						"type": "string",
-						"defaultValue": "@concat('')"
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -73,16 +76,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().File",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().Directory",
-							"type": "Expression"
-						},
 						"fileSystem": {
-							"value": "@dataset().Contianer",
+							"value": "@dataset().Container",
 							"type": "Expression"
 						}
 					},
@@ -94,18 +89,86 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzDataLakeStr')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeG2')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/UsingMetaData')]",
+			"name": "[concat(parameters('factoryName'), '/LS_OnPremSQLServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Database": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_OnPremSQLServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_OnPrem_SQLserver')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_OnPremSQLServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Database": {
+							"value": "@dataset().Database",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"Database": {
+						"type": "String"
+					},
+					"Schema": {
+						"type": "String"
+					},
+					"Table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().Table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_OnPremSQLServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlowPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "GetMetadata",
-						"type": "GetMetadata",
+						"name": "Lookup on Employee Table",
+						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -116,42 +179,28 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00"
+							},
 							"dataset": {
-								"referenceName": "DS_AzDataLakeStr",
+								"referenceName": "DS_OnPrem_SQLserver",
 								"type": "DatasetReference",
 								"parameters": {
-									"DataLakeURI": {
-										"value": "@pipeline().parameters.SourceDataLake",
-										"type": "Expression"
-									},
-									"Contianer": {
-										"value": "@pipeline().parameters.SourceContainer",
-										"type": "Expression"
-									},
-									"Directory": "@concat('')",
-									"File": "@concat('')"
+									"Database": "TestDB",
+									"Schema": "dbo",
+									"Table": "employee"
 								}
 							},
-							"fieldList": [
-								"childItems",
-								"itemName",
-								"itemType"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
+							"firstRowOnly": false
 						}
 					},
 					{
-						"name": "FilterOnFile",
+						"name": "Get Male Gender Records",
 						"type": "Filter",
 						"dependsOn": [
 							{
-								"activity": "GetMetadata",
+								"activity": "Lookup on Employee Table",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -160,141 +209,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GetMetadata').output.childItems",
+								"value": "@activity('Lookup on Employee Table').output.value",
 								"type": "Expression"
 							},
 							"condition": {
-								"value": "@equals(item().type,'File')",
+								"value": "@equals(item().Gender,'M')",
 								"type": "Expression"
 							}
-						}
-					},
-					{
-						"name": "ForEachFile",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "FilterOnFile",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('FilterOnFile').output.value",
-								"type": "Expression"
-							},
-							"batchCount": 5,
-							"activities": [
-								{
-									"name": "Copydata",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_AzDataLakeStr",
-											"type": "DatasetReference",
-											"parameters": {
-												"DataLakeURI": {
-													"value": "@pipeline().parameters.SourceDataLake",
-													"type": "Expression"
-												},
-												"Contianer": {
-													"value": "@pipeline().parameters.SourceContainer",
-													"type": "Expression"
-												},
-												"Directory": "@concat('')",
-												"File": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_AzDataLakeStr",
-											"type": "DatasetReference",
-											"parameters": {
-												"DataLakeURI": {
-													"value": "@pipeline().parameters.DestinationDataLake",
-													"type": "Expression"
-												},
-												"Contianer": {
-													"value": "@pipeline().parameters.DestinationContainer",
-													"type": "Expression"
-												},
-												"Directory": "NewMigration",
-												"File": "@concat('')"
-											}
-										}
-									]
-								}
-							]
 						}
 					}
 				],
-				"parameters": {
-					"SourceContainer": {
-						"type": "string",
-						"defaultValue": "dlcont01"
-					},
-					"DestinationContainer": {
-						"type": "string",
-						"defaultValue": "outcontainer"
-					},
-					"SourceDataLake": {
-						"type": "string",
-						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
-					},
-					"DestinationDataLake": {
-						"type": "string",
-						"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
-					}
-				},
-				"variables": {
-					"Dump": {
-						"type": "String"
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_AzDataLakeStr')]"
+				"[concat(variables('factoryId'), '/datasets/DS_OnPrem_SQLserver')]"
 			]
 		}
 	]

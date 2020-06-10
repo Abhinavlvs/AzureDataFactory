@@ -5,8 +5,11 @@
 		"factoryName": {
 			"value": "AzDF2020"
 		},
-		"LS_AzDataLakeStr_properties_typeProperties_url": {
-			"value": "@linkedService().BlobUrl"
+		"LS_OnPremSQLServer_connectionString": {
+			"value": ""
+		},
+		"LS_AzureDataLakeG2_properties_typeProperties_url": {
+			"value": "@linkedService().BlobURI"
 		}
 	}
 }
