@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "LookupDL",
+				"name": "Lookup on Employee Table",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -29,6 +29,48 @@
 						}
 					},
 					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Get Male Gender Records",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Lookup on Employee Table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup on Employee Table').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().Gender,'M')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach Record",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Male Gender Records",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Male Gender Records').output.value",
+						"type": "Expression"
+					}
 				}
 			}
 		],
