@@ -3,7 +3,10 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AzureDataLakeG2",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"BlobServiceURI": "https://azdatalakeg2.dfs.core.windows.net"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
