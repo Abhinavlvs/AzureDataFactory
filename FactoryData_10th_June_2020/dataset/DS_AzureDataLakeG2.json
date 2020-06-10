@@ -3,46 +3,13 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AzureDataLakeG2",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"BlobServiceURI": {
-					"value": "@dataset().DataLakeServiceURI",
-					"type": "Expression"
-				}
-			}
-		},
-		"parameters": {
-			"DataLakeServiceURI": {
-				"type": "string",
-				"defaultValue": "https://azdatalakeg2.blob.core.windows.net"
-			},
-			"Container": {
-				"type": "string"
-			},
-			"Folder": {
-				"type": "string"
-			},
-			"File": {
-				"type": "string"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().File",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().Folder",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "@dataset().Container",
-					"type": "Expression"
-				}
+				"type": "AzureBlobFSLocation"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
