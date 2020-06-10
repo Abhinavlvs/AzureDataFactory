@@ -1,0 +1,16 @@
+{
+	"name": "LS_AzureDataLakeG2",
+	"properties": {
+		"type": "AzureBlobFS",
+		"annotations": [],
+		"parameters": {
+			"BlobServiceURI": {
+				"type": "string",
+				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+			}
+		},
+		"typeProperties": {
+			"url": "@linkedService().BlobServiceURI"
+		}
+	}
+}
