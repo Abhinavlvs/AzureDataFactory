@@ -1,0 +1,47 @@
+{
+	"name": "DataFlowPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "LookupDL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_AzureDataLakeG2",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"DataLakeURI": {
+				"type": "string",
+				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+			},
+			"SourceContianer": {
+				"type": "string",
+				"defaultValue": "testcontainer"
+			}
+		},
+		"annotations": []
+	}
+}
