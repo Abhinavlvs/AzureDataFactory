@@ -8,6 +8,9 @@
 		"LS_OnPremSQLServer_connectionString": {
 			"value": ""
 		},
+		"LS_OracleDB_connectionString": {
+			"value": ""
+		},
 		"LS_AzureDataLakeG2_properties_typeProperties_url": {
 			"value": "@linkedService().BlobURI"
 		}
