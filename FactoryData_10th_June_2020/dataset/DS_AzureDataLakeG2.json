@@ -3,7 +3,21 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AzureDataLakeG2",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"BlobServiceURI": {
+					"value": "@dataset().DataLakeURI",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"Container": {
+				"type": "string"
+			},
+			"DataLakeURI": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
