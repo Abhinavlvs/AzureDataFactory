@@ -19,14 +19,6 @@
 			"Container": {
 				"type": "string",
 				"defaultValue": "contianer-01"
-			},
-			"Folder": {
-				"type": "string",
-				"defaultValue": "*"
-			},
-			"File": {
-				"type": "string",
-				"defaultValue": "*"
 			}
 		},
 		"annotations": [],
@@ -34,8 +26,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "@dataset().File",
-				"folderPath": "@dataset().Folder",
 				"fileSystem": {
 					"value": "@dataset().Container",
 					"type": "Expression"
