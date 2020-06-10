@@ -3,8 +3,13 @@
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobFS",
+		"parameters": {
+			"BlobURI": {
+				"type": "string"
+			}
+		},
 		"typeProperties": {
-			"url": "https://azdlgv2.dfs.core.windows.net"
+			"url": "@linkedService().BlobURI"
 		}
 	}
 }
