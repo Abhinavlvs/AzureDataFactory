@@ -53,25 +53,6 @@
 						"type": "Expression"
 					}
 				}
-			},
-			{
-				"name": "ForEach Record",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Get Male Gender Records",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Get Male Gender Records').output.value",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"annotations": []
