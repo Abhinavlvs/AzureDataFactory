@@ -13,12 +13,16 @@
 		},
 		"parameters": {
 			"DataLakeURI": {
-				"type": "String",
-				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+				"type": "String"
 			},
 			"Container": {
-				"type": "string",
-				"defaultValue": "contianer-01"
+				"type": "string"
+			},
+			"Folder": {
+				"type": "string"
+			},
+			"File": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
