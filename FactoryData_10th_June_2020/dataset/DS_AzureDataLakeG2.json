@@ -11,17 +11,6 @@
 				}
 			}
 		},
-		"parameters": {
-			"Container": {
-				"type": "string"
-			},
-			"DataLakeURI": {
-				"type": "string"
-			},
-			"Folder": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
