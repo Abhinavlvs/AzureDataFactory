@@ -1,5 +1,5 @@
 {
-	"name": "DataFlowPipeline",
+	"name": "TestPipeline",
 	"properties": {
 		"activities": [
 			{
