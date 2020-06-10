@@ -5,7 +5,7 @@
 			"referenceName": "LS_AzureDataLakeG2",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"BlobServiceURI": {
+				"BlobURI": {
 					"value": "@dataset().DataLakeURI",
 					"type": "Expression"
 				}

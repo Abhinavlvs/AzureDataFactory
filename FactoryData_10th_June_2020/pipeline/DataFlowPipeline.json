@@ -19,7 +19,8 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true
+							"recursive": true,
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
@@ -27,19 +28,38 @@
 					},
 					"dataset": {
 						"referenceName": "DS_AzureDataLakeG2",
-						"type": "DatasetReference"
-					}
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.SourceContianer",
+								"type": "Expression"
+							},
+							"DataLakeURI": {
+								"value": "@pipeline().parameters.DataLakeURI",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
 		"parameters": {
 			"DataLakeURI": {
 				"type": "string",
-				"defaultValue": "https://azdatalakeg2.dfs.core.windows.net"
+				"defaultValue": "https://azdlgv2.dfs.core.windows.net"
 			},
 			"SourceContianer": {
 				"type": "string",
-				"defaultValue": "testcontainer"
+				"defaultValue": "test"
+			},
+			"SourceFolder": {
+				"type": "string",
+				"defaultValue": "*"
+			},
+			"SourceFile": {
+				"type": "string",
+				"defaultValue": "*"
 			}
 		},
 		"annotations": []
