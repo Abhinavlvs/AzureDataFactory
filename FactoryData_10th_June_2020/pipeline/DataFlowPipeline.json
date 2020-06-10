@@ -112,44 +112,9 @@
 				"outputs": [
 					{
 						"referenceName": "DS_AzureDataLakeG2",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "test",
-							"DataLakeURI": "https://azdlgv2.dfs.core.windows.net",
-							"Folder": "Http_file"
-						}
+						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "DataCleansing",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Get File Data From Http Server",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DataCleansing",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					}
-				}
 			}
 		],
 		"annotations": []
