@@ -19,6 +19,10 @@
 			"type": "string",
 			"defaultValue": "@linkedService().BlobURI"
 		},
+		"LS_HttpServer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -54,6 +58,9 @@
 					},
 					"LS_AzureDataLakeG2_properties_typeProperties_url": {
 						"value": "[parameters('LS_AzureDataLakeG2_properties_typeProperties_url')]"
+					},
+					"LS_HttpServer_properties_typeProperties_url": {
+						"value": "[parameters('LS_HttpServer_properties_typeProperties_url')]"
 					}
 				}
 			},

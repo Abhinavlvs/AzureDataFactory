@@ -13,6 +13,9 @@
 		},
 		"LS_AzureDataLakeG2_properties_typeProperties_url": {
 			"value": "@linkedService().BlobURI"
+		},
+		"LS_HttpServer_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
 		}
 	}
 }
