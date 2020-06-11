@@ -5,7 +5,8 @@
 		"annotations": [],
 		"parameters": {
 			"BlobURI": {
-				"type": "string"
+				"type": "string",
+				"default": "https://azdlgv2.dfs.core.windows.net"
 			}
 		},
 		"typeProperties": {
