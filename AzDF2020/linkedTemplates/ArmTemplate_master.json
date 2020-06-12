@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF2020"
 		},
+		"LS_AzureDataLakeG2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeG2'"
+		},
 		"LS_OnPremSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_OnPremSQLServer'"
@@ -17,7 +21,7 @@
 		},
 		"LS_AzureDataLakeG2_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "@linkedService().BlobURI"
+			"defaultValue": "https://azdlgv2.dfs.core.windows.net"
 		},
 		"LS_HttpServer_properties_typeProperties_url": {
 			"type": "string",
@@ -49,6 +53,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_AzureDataLakeG2_accountKey": {
+						"value": "[parameters('LS_AzureDataLakeG2_accountKey')]"
 					},
 					"LS_OnPremSQLServer_connectionString": {
 						"value": "[parameters('LS_OnPremSQLServer_connectionString')]"

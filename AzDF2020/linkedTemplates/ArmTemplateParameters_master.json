@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "AzDF2020"
 		},
+		"LS_AzureDataLakeG2_accountKey": {
+			"value": ""
+		},
 		"LS_OnPremSQLServer_connectionString": {
 			"value": ""
 		},
@@ -12,7 +15,7 @@
 			"value": ""
 		},
 		"LS_AzureDataLakeG2_properties_typeProperties_url": {
-			"value": "@linkedService().BlobURI"
+			"value": "https://azdlgv2.dfs.core.windows.net"
 		},
 		"LS_HttpServer_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
