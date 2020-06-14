@@ -5,13 +5,16 @@
 		"factoryName": {
 			"value": "AzDF20"
 		},
-		"LS_DataLake_accountKey": {
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
+		"LS_AureBlobStore_connectionString": {
 			"value": ""
 		},
 		"LS_AzureSQLDB_connectionString": {
 			"value": ""
 		},
-		"LS_AureBlobStore_connectionString": {
+		"LS_DataLake_accountKey": {
 			"value": ""
 		},
 		"LS_DataLake_properties_typeProperties_url": {

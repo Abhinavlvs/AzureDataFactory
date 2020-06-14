@@ -7,17 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF20"
 		},
-		"LS_DataLake_accountKey": {
+		"AzureSynapseAnalytics1_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_DataLake'"
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+		},
+		"LS_AureBlobStore_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AureBlobStore'"
 		},
 		"LS_AzureSQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AzureSQLDB'"
 		},
-		"LS_AureBlobStore_connectionString": {
+		"LS_DataLake_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AureBlobStore'"
+			"metadata": "Secure string for 'accountKey' of 'LS_DataLake'"
 		},
 		"LS_DataLake_properties_typeProperties_url": {
 			"type": "string",
@@ -50,14 +54,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LS_DataLake_accountKey": {
-						"value": "[parameters('LS_DataLake_accountKey')]"
+					"AzureSynapseAnalytics1_connectionString": {
+						"value": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+					},
+					"LS_AureBlobStore_connectionString": {
+						"value": "[parameters('LS_AureBlobStore_connectionString')]"
 					},
 					"LS_AzureSQLDB_connectionString": {
 						"value": "[parameters('LS_AzureSQLDB_connectionString')]"
 					},
-					"LS_AureBlobStore_connectionString": {
-						"value": "[parameters('LS_AureBlobStore_connectionString')]"
+					"LS_DataLake_accountKey": {
+						"value": "[parameters('LS_DataLake_accountKey')]"
 					},
 					"LS_DataLake_properties_typeProperties_url": {
 						"value": "[parameters('LS_DataLake_properties_typeProperties_url')]"
