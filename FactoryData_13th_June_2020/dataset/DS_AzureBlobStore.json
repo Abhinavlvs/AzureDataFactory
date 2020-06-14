@@ -1,0 +1,26 @@
+{
+	"name": "DS_AzureBlobStore",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AureBlobStore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@CONCAT('Incremental-', pipeline().RunId, '.txt')",
+					"type": "Expression"
+				},
+				"folderPath": "incrementalcopy",
+				"container": "adftutorial"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
