@@ -1,0 +1,12 @@
+{
+	"name": "HTTP_SOF",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
