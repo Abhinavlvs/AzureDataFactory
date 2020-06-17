@@ -3,24 +3,13 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AzureDataLakeG2",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"BlobURI": {
-					"value": "https://azdlgv2.dfs.core.windows.net",
-					"type": "Expression"
-				}
-			}
+			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "Httpfile",
-				"fileSystem": {
-					"value": "test",
-					"type": "Expression"
-				}
+				"type": "AzureBlobFSLocation"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
