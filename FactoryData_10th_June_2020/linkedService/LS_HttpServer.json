@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv",
+			"url": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
