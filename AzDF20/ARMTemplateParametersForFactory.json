@@ -5,20 +5,32 @@
 		"factoryName": {
 			"value": "AzDF20"
 		},
-		"AzureSynapseAnalytics1_connectionString": {
+		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
-		"LS_AureBlobStore_connectionString": {
+		"LS_AzureDataLakeG2_accountKey": {
 			"value": ""
 		},
-		"LS_AzureSQLDB_connectionString": {
+		"LS_OnPremSQLServer_connectionString": {
 			"value": ""
 		},
-		"LS_DataLake_accountKey": {
+		"LS_OracleDB_connectionString": {
 			"value": ""
 		},
-		"LS_DataLake_properties_typeProperties_url": {
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://azdlstr.dfs.core.windows.net"
+		},
+		"HTTP_SOF_properties_typeProperties_url": {
+			"value": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
+		},
+		"LS_AzureDataLakeG2_properties_typeProperties_url": {
+			"value": "https://azdlstr.dfs.core.windows.net"
+		},
+		"LS_HttpServer_properties_typeProperties_url": {
+			"value": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
 		}
 	}
 }

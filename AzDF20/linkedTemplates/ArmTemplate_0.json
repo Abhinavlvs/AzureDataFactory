@@ -7,25 +7,41 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF20"
 		},
-		"AzureSynapseAnalytics1_connectionString": {
+		"AzureDataLakeStorage1_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
-		"LS_AureBlobStore_connectionString": {
+		"LS_AzureDataLakeG2_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AureBlobStore'"
+			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeG2'"
 		},
-		"LS_AzureSQLDB_connectionString": {
+		"LS_OnPremSQLServer_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureSQLDB'"
+			"metadata": "Secure string for 'connectionString' of 'LS_OnPremSQLServer'"
 		},
-		"LS_DataLake_accountKey": {
+		"LS_OracleDB_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_DataLake'"
+			"metadata": "Secure string for 'connectionString' of 'LS_OracleDB'"
 		},
-		"LS_DataLake_properties_typeProperties_url": {
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://azdlstr.dfs.core.windows.net"
+		},
+		"HTTP_SOF_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
+		},
+		"LS_AzureDataLakeG2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azdlstr.dfs.core.windows.net"
+		},
+		"LS_HttpServer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.stackexchange.com/2.2/posts?order=desc&sort=activity&site=stackoverflow"
 		}
 	},
 	"variables": {
@@ -33,81 +49,161 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalytics1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSynapseAnalytics1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_AureBlobStore')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_AureBlobStore_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_AzureSQLDB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_AzureSQLDB_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_DataLake')]",
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('LS_DataLake_properties_typeProperties_url')]",
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
 					"accountKey": {
 						"type": "SecureString",
-						"value": "[parameters('LS_DataLake_accountKey')]"
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_AzureBlobStore')]",
+			"name": "[concat(parameters('factoryName'), '/HTTP_SOF')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HTTP_SOF_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": false,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AzureDataLakeG2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_AzureDataLakeG2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_AzureDataLakeG2_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_HttpServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('LS_HttpServer_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SelfHostedIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_AzureDataLakeG2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_AureBlobStore",
+					"referenceName": "LS_AzureDataLakeG2",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@CONCAT('Incremental-', pipeline().RunId, '.txt')",
-							"type": "Expression"
-						},
-						"folderPath": "incrementalcopy",
-						"container": "adftutorial"
+						"type": "AzureBlobFSLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "movie",
+						"type": "String"
+					},
+					{
+						"name": "title",
+						"type": "String"
+					},
+					{
+						"name": "genres",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "Rating",
+						"type": "String"
+					},
+					{
+						"name": "Rotton Tomato",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeG2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Dataflow_DL_Sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDataLakeG2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "sink",
+						"fileSystem": "test"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -116,612 +212,276 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AureBlobStore')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeG2')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_AzureSQLDB')]",
+			"name": "[concat(parameters('factoryName'), '/DS_HttpServer_File')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_AzureSQLDB",
+					"referenceName": "LS_HttpServer",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "watermarktable"
-				}
+					"location": {
+						"type": "HttpServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "movie",
+						"type": "String"
+					},
+					{
+						"name": "title",
+						"type": "String"
+					},
+					{
+						"name": "genres",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "Rating",
+						"type": "String"
+					},
+					{
+						"name": "Rotton Tomato",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzureSQLDB')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_HttpServer')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_3i2')]",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics1",
+					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"cw_table": {
+					"test": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_OnPremSQLServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Database": {
 						"type": "String"
 					}
 				},
 				"annotations": [],
-				"type": "AzureSqlDWTable",
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_OnPremSQLServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_OracleDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_OracleDB_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_OnPrem_SQLserver')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_OnPremSQLServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Database": {
+							"value": "@dataset().Database",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"Database": {
+						"type": "String"
+					},
+					"Schema": {
+						"type": "String"
+					},
+					"Table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "SalesLT",
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
 					"table": {
-						"value": "@dataset().cw_table",
+						"value": "@dataset().Table",
 						"type": "Expression"
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_OnPremSQLServer')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_3i2')]",
+			"name": "[concat(parameters('factoryName'), '/DS_OracleTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_AzureSQLDB",
+					"referenceName": "LS_OracleDB",
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"cw_table": {
+					"Table": {
 						"type": "String"
 					}
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
+				"type": "OracleTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "SalesLT",
+					"schema": "ORAUSER",
 					"table": {
-						"value": "@dataset().cw_table",
+						"value": "@dataset().Table",
 						"type": "Expression"
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzureSQLDB')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_OracleDB')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CopyFromSQLToSQLDW')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/DataCleansing')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_3i2",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_AzureDataLakeG2",
+								"type": "DatasetReference"
 							},
-							"activities": [
-								{
-									"name": "Copy_3i2",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "SalesLT.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "SalesLT.@{item().destination.table}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource"
-										},
-										"sink": {
-											"type": "SqlDWSink",
-											"preCopyScript": {
-												"value": "@item().copySink.preCopyScript",
-												"type": "Expression"
-											},
-											"allowPolyBase": true,
-											"polyBaseSettings": {
-												"rejectValue": 0,
-												"rejectType": "value",
-												"useTypeDefault": false
-											}
-										},
-										"enableStaging": true,
-										"stagingSettings": {
-											"linkedServiceName": {
-												"referenceName": "LS_AureBlobStore",
-												"type": "LinkedServiceReference"
-											},
-											"path": "adftutorial/SQLtoSQLSW"
-										},
-										"translator": {
-											"value": "@item().copyActivity.translator",
-											"type": "Expression"
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "SourceDataset_3i2",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DestinationDataset_3i2",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().destination.table"
-											}
-										}
-									]
-								}
-							]
+							"name": "DataLakeSource"
 						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "Address"
-								},
-								"destination": {
-									"table": "Address"
-								},
-								"copySink": {
-									"preCopyScript": "BEGIN TRY\nIF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SalesLT') EXEC('Create Schema [SalesLT]');\nEND TRY\nBEGIN CATCH\nif ERROR_NUMBER() <> 2714 throw;\nEND CATCH\n\nIF OBJECT_ID('[SalesLT].[Address]', 'U') IS NULL CREATE TABLE [SalesLT].[Address] ([AddressID] int,\n[AddressLine1] nvarchar(60),\n[AddressLine2] nvarchar(60),\n[City] nvarchar(30),\n[StateProvince] nvarchar(50),\n[CountryRegion] nvarchar(50),\n[PostalCode] nvarchar(15),\n[rowguid] uniqueidentifier,\n[ModifiedDate] datetime);\n"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "AddressID",
-													"type": "Int32"
-												},
-												"sink": {
-													"name": "AddressID",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "AddressLine1",
-													"type": "String"
-												},
-												"sink": {
-													"name": "AddressLine1",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "AddressLine2",
-													"type": "String"
-												},
-												"sink": {
-													"name": "AddressLine2",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "City",
-													"type": "String"
-												},
-												"sink": {
-													"name": "City",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "StateProvince",
-													"type": "String"
-												},
-												"sink": {
-													"name": "StateProvince",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "CountryRegion",
-													"type": "String"
-												},
-												"sink": {
-													"name": "CountryRegion",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "PostalCode",
-													"type": "String"
-												},
-												"sink": {
-													"name": "PostalCode",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "rowguid",
-													"type": "Guid"
-												},
-												"sink": {
-													"name": "rowguid",
-													"type": "Guid"
-												}
-											},
-											{
-												"source": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												},
-												"sink": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												}
-											}
-										]
-									}
-								}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_Dataflow_DL_Sink",
+								"type": "DatasetReference"
 							},
-							{
-								"source": {
-									"table": "Customer"
-								},
-								"destination": {
-									"table": "Customer"
-								},
-								"copySink": {
-									"preCopyScript": "BEGIN TRY\nIF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SalesLT') EXEC('Create Schema [SalesLT]');\nEND TRY\nBEGIN CATCH\nif ERROR_NUMBER() <> 2714 throw;\nEND CATCH\n\nIF OBJECT_ID('[SalesLT].[Customer]', 'U') IS NULL CREATE TABLE [SalesLT].[Customer] ([CustomerID] int,\n[NameStyle] bit,\n[Title] nvarchar(8),\n[FirstName] nvarchar(50),\n[MiddleName] nvarchar(50),\n[LastName] nvarchar(50),\n[Suffix] nvarchar(10),\n[CompanyName] nvarchar(128),\n[SalesPerson] nvarchar(256),\n[EmailAddress] nvarchar(50),\n[Phone] nvarchar(25),\n[PasswordHash] varchar(128),\n[PasswordSalt] varchar(10),\n[rowguid] uniqueidentifier,\n[ModifiedDate] datetime);\n"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "CustomerID",
-													"type": "Int32"
-												},
-												"sink": {
-													"name": "CustomerID",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "NameStyle",
-													"type": "Boolean"
-												},
-												"sink": {
-													"name": "NameStyle",
-													"type": "Boolean"
-												}
-											},
-											{
-												"source": {
-													"name": "Title",
-													"type": "String"
-												},
-												"sink": {
-													"name": "Title",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "FirstName",
-													"type": "String"
-												},
-												"sink": {
-													"name": "FirstName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "MiddleName",
-													"type": "String"
-												},
-												"sink": {
-													"name": "MiddleName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "LastName",
-													"type": "String"
-												},
-												"sink": {
-													"name": "LastName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Suffix",
-													"type": "String"
-												},
-												"sink": {
-													"name": "Suffix",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "CompanyName",
-													"type": "String"
-												},
-												"sink": {
-													"name": "CompanyName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "SalesPerson",
-													"type": "String"
-												},
-												"sink": {
-													"name": "SalesPerson",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "EmailAddress",
-													"type": "String"
-												},
-												"sink": {
-													"name": "EmailAddress",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Phone",
-													"type": "String"
-												},
-												"sink": {
-													"name": "Phone",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "PasswordHash",
-													"type": "String"
-												},
-												"sink": {
-													"name": "PasswordHash",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "PasswordSalt",
-													"type": "String"
-												},
-												"sink": {
-													"name": "PasswordSalt",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "rowguid",
-													"type": "Guid"
-												},
-												"sink": {
-													"name": "rowguid",
-													"type": "Guid"
-												}
-											},
-											{
-												"source": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												},
-												"sink": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												}
-											}
-										]
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "CustomerAddress"
-								},
-								"destination": {
-									"table": "CustomerAddress"
-								},
-								"copySink": {
-									"preCopyScript": "BEGIN TRY\nIF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'SalesLT') EXEC('Create Schema [SalesLT]');\nEND TRY\nBEGIN CATCH\nif ERROR_NUMBER() <> 2714 throw;\nEND CATCH\n\nIF OBJECT_ID('[SalesLT].[CustomerAddress]', 'U') IS NULL CREATE TABLE [SalesLT].[CustomerAddress] ([CustomerID] int,\n[AddressID] int,\n[AddressType] nvarchar(50),\n[rowguid] uniqueidentifier,\n[ModifiedDate] datetime);\n"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "CustomerID",
-													"type": "Int32"
-												},
-												"sink": {
-													"name": "CustomerID",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "AddressID",
-													"type": "Int32"
-												},
-												"sink": {
-													"name": "AddressID",
-													"type": "Int32"
-												}
-											},
-											{
-												"source": {
-													"name": "AddressType",
-													"type": "String"
-												},
-												"sink": {
-													"name": "AddressType",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "rowguid",
-													"type": "Guid"
-												},
-												"sink": {
-													"name": "rowguid",
-													"type": "Guid"
-												}
-											},
-											{
-												"source": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												},
-												"sink": {
-													"name": "ModifiedDate",
-													"type": "DateTime"
-												}
-											}
-										]
-									}
-								}
-							}
-						]
-					}
-				},
-				"annotations": []
+							"name": "DataLakeSink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RenameColumns"
+						},
+						{
+							"name": "FilterDate"
+						},
+						{
+							"name": "AddNewColumn"
+						},
+						{
+							"name": "RearrangeColumns"
+						},
+						{
+							"name": "RankMoviesByRatings"
+						},
+						{
+							"name": "RearrangeColumnsAgain"
+						},
+						{
+							"name": "Aggregate"
+						},
+						{
+							"name": "ModifyColumnsDataTypes",
+							"description": "Autogenerated by data preview actions"
+						}
+					],
+					"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100000) ~> DataLakeSource\nDataLakeSource select(mapColumn(\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tyear,\n\t\t{Rotten Tomato} = {Rotton Tomato}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RenameColumns\nRenameColumns filter(toInteger(year)>1950) ~> FilterDate\nFilterDate derive(PrimaryGenre = iif(locate('|', genres)>1,left(genres, locate('|',genres)-1) , genres),\n\t\tLoadDate = currentDate()) ~> AddNewColumn\nAddNewColumn select(mapColumn(\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tPrimaryGenre,\n\t\tyear,\n\t\t{Rotten Tomato},\n\t\tDataLoadDate = LoadDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RearrangeColumns\nRearrangeColumns window(over(PrimaryGenre,\n\t\tyear),\n\tdesc({Rotten Tomato}, true),\n\tRatingsRank = rank()) ~> RankMoviesByRatings\nRankMoviesByRatings select(mapColumn(\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tPrimaryGenre,\n\t\tyear,\n\t\t{Rotten Tomato},\n\t\tRatingsRank,\n\t\tDataLoadDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RearrangeColumnsAgain\nModifyColumnsDataTypes aggregate(groupBy(PrimaryGenre,\n\t\tyear),\n\tAverageRating = round(avg({Rotten Tomato}), 2),\n\t\tHighestRated = first(title),\n\t\tLowestRated = last(title),\n\t\tNumberOfMovies = count()) ~> Aggregate\nRearrangeColumnsAgain derive(movie = toInteger(movie),\n\t\t{Rotten Tomato} = toInteger({Rotten Tomato}),\n\t\tRatingsRank = toInteger({RatingsRank})) ~> ModifyColumnsDataTypes\nAggregate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tfilePattern:'output.txt',\n\tmapColumn(\n\t\tPrimaryGenre,\n\t\tyear,\n\t\tAverageRating,\n\t\tHighestRated,\n\t\tLowestRated,\n\t\tNumberOfMovies\n\t),\n\tdateFormat:'yyyy-MM-dd',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> DataLakeSink"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_3i2')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_3i2')]",
-				"[concat(variables('factoryId'), '/linkedServices/LS_AureBlobStore')]"
+				"[concat(variables('factoryId'), '/datasets/DS_AzureDataLakeG2')]",
+				"[concat(variables('factoryId'), '/datasets/DS_Dataflow_DL_Sink')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/IncrementalCopyPipeline')]",
+			"name": "[concat(parameters('factoryName'), '/DataFlowPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "LookupOldWaterMarkActivity",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "DS_AzureSQLDB",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": true
-						}
-					},
-					{
-						"name": "LookupNewWaterMarkActivity",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select MAX(LastModifytime) as NewWatermarkvalue from data_source_table",
-								"queryTimeout": "02:00:00"
-							},
-							"dataset": {
-								"referenceName": "DS_AzureSQLDB",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": true
-						}
-					},
-					{
-						"name": "IncrementalCopyActivity",
+						"name": "Get File Data From Http Server",
 						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "LookupOldWaterMarkActivity",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "LookupNewWaterMarkActivity",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -732,47 +492,114 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "select * from data_source_table where LastModifytime > '@{activity('LookupOldWaterMarkActivity').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkvalue}'",
-									"type": "Expression"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
 								},
-								"queryTimeout": "02:00:00"
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
 								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
+									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
 									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"fileExtension": ""
 								}
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "movie",
+											"type": "String"
+										},
+										"sink": {
+											"name": "movie",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "title",
+											"type": "String"
+										},
+										"sink": {
+											"name": "title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "genres",
+											"type": "String"
+										},
+										"sink": {
+											"name": "genres",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Rating",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Rating",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Rotton Tomato",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Rotton Tomato",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
-								"referenceName": "DS_AzureSQLDB",
+								"referenceName": "DS_HttpServer_File",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_AzureBlobStore",
+								"referenceName": "DS_AzureDataLakeG2",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
 					},
 					{
-						"name": "StoredProceduretoWriteWatermarkActivity",
-						"type": "SqlServerStoredProcedure",
+						"name": "DataCleansing",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "IncrementalCopyActivity",
+								"activity": "Get File Data From Http Server",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -787,36 +614,164 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[usp_write_watermark]",
-							"storedProcedureParameters": {
-								"LastModifiedtime": {
-									"value": {
-										"value": "@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkvalue}",
-										"type": "Expression"
-									},
-									"type": "DateTime"
-								},
-								"TableName": {
-									"value": {
-										"value": "@{activity('LookupOldWaterMarkActivity').output.firstRow.TableName}",
-										"type": "Expression"
-									},
-									"type": "String"
+							"dataflow": {
+								"referenceName": "DataCleansing",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"DataLakeSource": {},
+									"DataLakeSink": {}
 								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
 							}
-						},
-						"linkedServiceName": {
-							"referenceName": "LS_AzureSQLDB",
-							"type": "LinkedServiceReference"
 						}
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_AzureSQLDB')]",
-				"[concat(variables('factoryId'), '/datasets/DS_AzureBlobStore')]",
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzureSQLDB')]"
+				"[concat(variables('factoryId'), '/datasets/DS_HttpServer_File')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzureDataLakeG2')]",
+				"[concat(variables('factoryId'), '/dataflows/DataCleansing')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlowPipeline_copy1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataCleansing",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataCleansing",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"DataLakeSource": {},
+									"DataLakeSink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DataCleansing')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup on Employee Table",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "DS_OnPrem_SQLserver",
+								"type": "DatasetReference",
+								"parameters": {
+									"Database": "TestDB",
+									"Schema": "dbo",
+									"Table": "employee"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Get Male Gender Records",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "Lookup on Employee Table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup on Employee Table').output.value",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@equals(item().Gender,'M')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Get Table Metadata",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "DS_OnPrem_SQLserver",
+								"type": "DatasetReference",
+								"parameters": {
+									"Database": "TestDB",
+									"Schema": "dbo",
+									"Table": "employee"
+								}
+							},
+							"fieldList": [
+								"structure",
+								"columnCount"
+							]
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_OnPrem_SQLserver')]"
 			]
 		}
 	]
