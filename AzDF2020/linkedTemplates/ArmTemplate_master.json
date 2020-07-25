@@ -7,25 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF2020"
 		},
-		"LS_AzureDataLakeG2_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeG2'"
-		},
-		"LS_OnPremSQLServer_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_OnPremSQLServer'"
-		},
-		"LS_OracleDB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_OracleDB'"
-		},
-		"LS_AzureDataLakeG2_properties_typeProperties_url": {
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://azdlgv2.dfs.core.windows.net"
+			"defaultValue": "https://azdlg2strg.dfs.core.windows.net"
 		},
-		"LS_HttpServer_properties_typeProperties_url": {
+		"AzureDataLakeStorage1_properties_typeProperties_tenant": {
 			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
+			"defaultValue": "b5ba466b-a54c-4eeb-b78f-1fe5525f48d5"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "16ebd4f4-75f5-41fe-a3b2-5f6cc4b6ea63"
+		},
+		"LS_AzureKV_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://az-kv-eastus2.vault.azure.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -54,20 +50,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LS_AzureDataLakeG2_accountKey": {
-						"value": "[parameters('LS_AzureDataLakeG2_accountKey')]"
+					"LS_AzureKV_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_AzureKV_properties_typeProperties_baseUrl')]"
 					},
-					"LS_OnPremSQLServer_connectionString": {
-						"value": "[parameters('LS_OnPremSQLServer_connectionString')]"
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
-					"LS_OracleDB_connectionString": {
-						"value": "[parameters('LS_OracleDB_connectionString')]"
+					"AzureDataLakeStorage1_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_tenant')]"
 					},
-					"LS_AzureDataLakeG2_properties_typeProperties_url": {
-						"value": "[parameters('LS_AzureDataLakeG2_properties_typeProperties_url')]"
-					},
-					"LS_HttpServer_properties_typeProperties_url": {
-						"value": "[parameters('LS_HttpServer_properties_typeProperties_url')]"
+					"AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId')]"
 					}
 				}
 			},
