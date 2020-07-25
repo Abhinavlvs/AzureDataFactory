@@ -12,9 +12,17 @@
 					"name": "source"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLSG2",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source"
+			"script": "parameters{\n\tPath as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:[($Path)]) ~> source\nsource sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
 		}
 	}
 }
