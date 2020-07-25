@@ -21,8 +21,12 @@
 					"name": "sink"
 				}
 			],
-			"transformations": [],
-			"script": "parameters{\n\tPath as string ('fortune100_m.csv')\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:[($Path)]) ~> source\nsource sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+			"transformations": [
+				{
+					"name": "RowFilter"
+				}
+			],
+			"script": "parameters{\n\tPath as string ('fortune100_m.csv')\n}\nsource(output(\n\t\tId as short,\n\t\trank as short,\n\t\ttitle as string,\n\t\tPrevious_Rank as string,\n\t\tRevenues as double,\n\t\tProfits as double,\n\t\tEmployees as integer,\n\t\tCEO as string,\n\t\tCEO_Title as string,\n\t\tSector as string,\n\t\tIndustry as string,\n\t\tYears_on_Fortune_500_List as string,\n\t\tCity as string,\n\t\tState as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:[($Path)]) ~> source\nsource filter(ERROR_FUNCTION('')) ~> RowFilter\nRowFilter sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
 		}
 	}
 }
