@@ -23,11 +23,6 @@
 								"value": "'@{fortune100_m.csv}'",
 								"type": "Expression"
 							}
-						},
-						"datasetParameters": {
-							"source": {
-								"Path": "fortune100_m.csv"
-							}
 						}
 					},
 					"compute": {
