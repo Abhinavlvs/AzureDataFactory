@@ -1,0 +1,42 @@
+{
+	"name": "test_pl_a",
+	"properties": {
+		"activities": [
+			{
+				"name": "test_df_a",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "test_df_a",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Path": {
+								"value": "'@{fortune100_m.csv}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"source": {
+								"Path": "fortune100_m.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
