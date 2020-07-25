@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"Path": {
-								"value": "'@{fortune100_m.csv}'",
+								"value": "'@{'fortune100_m.csv'}'",
 								"type": "Expression"
 							}
 						}
