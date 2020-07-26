@@ -1,0 +1,32 @@
+{
+	"name": "AzFunc",
+	"properties": {
+		"activities": [
+			{
+				"name": "Azure Function1",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": "HttpTrigger",
+					"method": "POST",
+					"body": {
+						"name": "Hello"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzFunction",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
