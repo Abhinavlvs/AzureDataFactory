@@ -1,0 +1,59 @@
+{
+	"name": "06_ps_no_activity_fails_and_fail_path_skipped_with_no_action_taken",
+	"properties": {
+		"description": "Activity fails and Successful path skipped with no action taken\n\nSkipping an actvity in ",
+		"activities": [
+			{
+				"name": "Should Succeed",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Failed",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Succeed",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Succeeds",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Succeed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": []
+	}
+}
