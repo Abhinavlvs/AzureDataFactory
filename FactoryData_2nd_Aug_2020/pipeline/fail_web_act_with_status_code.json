@@ -1,0 +1,25 @@
+{
+	"name": "fail_web_act_with_status_code",
+	"properties": {
+		"activities": [
+			{
+				"name": "REST Call",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-apiii/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
