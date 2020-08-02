@@ -1,0 +1,42 @@
+{
+	"name": "03_ps_activity_fails_with_action_taken",
+	"properties": {
+		"activities": [
+			{
+				"name": "Should Fail",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-aapapi/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Failed",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Fail",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": []
+	}
+}
