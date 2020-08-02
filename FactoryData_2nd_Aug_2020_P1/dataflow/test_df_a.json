@@ -1,0 +1,41 @@
+{
+	"name": "test_df_a",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLSG2",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLSG2",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SortE"
+				},
+				{
+					"name": "AlterRowE"
+				},
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "DerivedColumn"
+				}
+			],
+			"script": "parameters{\n\tPath as string ('fortune100_m.csv')\n}\nsource(output(\n\t\tId as short,\n\t\trank as short,\n\t\ttitle as string,\n\t\tPrevious_Rank as string,\n\t\tRevenues as double,\n\t\tProfits as double,\n\t\tEmployees as integer,\n\t\tCEO as string,\n\t\tCEO_Title as string,\n\t\tSector as string,\n\t\tIndustry as string,\n\t\tYears_on_Fortune_500_List as string,\n\t\tCity as string,\n\t\tState as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:[($Path)]) ~> source\nsource sort(asc(Revenues, true)) ~> SortE\nSortE alterRow(deleteIf(trim(Previous_Rank)=='NA')) ~> AlterRowE\nDerivedColumn split(Fortune500,\n\tdisjoint: false) ~> ConditionalSplit1@(main, other)\nAlterRowE derive(Fortune500 = Revenues > 4000) ~> DerivedColumn\nConditionalSplit1@main sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+		}
+	}
+}
