@@ -32,8 +32,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": "https://gorest.co.in/public-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
-							"method": "GET",
-							"headers": {}
+							"method": "GET"
 						}
 					}
 				],
@@ -61,8 +60,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": "https://gorest.co.in/public-apiii/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
-							"method": "GET",
-							"headers": {}
+							"method": "GET"
 						}
 					}
 				],
@@ -111,8 +109,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": "https://gorest.co.in/public-aapapi/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
-							"method": "GET",
-							"headers": {}
+							"method": "GET"
 						}
 					}
 				],

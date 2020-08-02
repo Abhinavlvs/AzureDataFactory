@@ -7,26 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AzDF2020"
 		},
-		"LS_AzureSQLDB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureSQLDB'"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://azdlg2strg.dfs.core.windows.net"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "b5ba466b-a54c-4eeb-b78f-1fe5525f48d5"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "16ebd4f4-75f5-41fe-a3b2-5f6cc4b6ea63"
-		},
-		"LS_AzureKV_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://az-kv-eastus2.vault.azure.net/"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -53,21 +33,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"LS_AzureSQLDB_connectionString": {
-						"value": "[parameters('LS_AzureSQLDB_connectionString')]"
-					},
-					"LS_AzureKV_properties_typeProperties_baseUrl": {
-						"value": "[parameters('LS_AzureKV_properties_typeProperties_baseUrl')]"
-					},
-					"AzureDataLakeStorage1_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
-					},
-					"AzureDataLakeStorage1_properties_typeProperties_tenant": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_tenant')]"
-					},
-					"AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId')]"
 					}
 				}
 			},

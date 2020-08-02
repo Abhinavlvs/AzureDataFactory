@@ -5,21 +5,6 @@
 		"factoryName": {
 			"value": "AzDF2020"
 		},
-		"LS_AzureSQLDB_connectionString": {
-			"value": ""
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://azdlg2strg.dfs.core.windows.net"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_tenant": {
-			"value": "b5ba466b-a54c-4eeb-b78f-1fe5525f48d5"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_servicePrincipalId": {
-			"value": "16ebd4f4-75f5-41fe-a3b2-5f6cc4b6ea63"
-		},
-		"LS_AzureKV_properties_typeProperties_baseUrl": {
-			"value": "https://az-kv-eastus2.vault.azure.net/"
-		},
 		"containerUri": {
 			"value": ""
 		},
