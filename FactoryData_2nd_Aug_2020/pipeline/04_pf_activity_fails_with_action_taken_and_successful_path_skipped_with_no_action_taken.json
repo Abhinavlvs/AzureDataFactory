@@ -1,7 +1,7 @@
 {
 	"name": "04_pf_activity_fails_with_action_taken_and_successful_path_skipped_with_no_action_taken",
 	"properties": {
-		"description": "Activity fails and Successful path skipped with no action taken",
+		"description": "Activity fails and Successful path skipped with no action taken\n\nSkipping an actvity in ",
 		"activities": [
 			{
 				"name": "Should Fail",
