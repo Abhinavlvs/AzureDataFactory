@@ -1,5 +1,5 @@
 {
-	"name": "02_activity_fails_with_no_action_taken",
+	"name": "02_pf_activity_fails_with_no_action_taken",
 	"properties": {
 		"activities": [
 			{
