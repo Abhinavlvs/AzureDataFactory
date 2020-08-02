@@ -1,5 +1,5 @@
 {
-	"name": "05_pf_activity_fails_with_action_taken_and_successful_path_skipped_with_action_taken",
+	"name": "05_ps_activity_fails_with_action_taken_and_successful_path_skipped_with_action_taken",
 	"properties": {
 		"description": "Activity fails and Successful path skipped with no action taken\n\nSkipping an actvity in ",
 		"activities": [
