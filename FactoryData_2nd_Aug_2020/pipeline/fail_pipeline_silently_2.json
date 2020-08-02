@@ -1,0 +1,108 @@
+{
+	"name": "fail_pipeline_silently_2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Should Fail",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-afpi/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Either_Fails_or_Succeeds",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Fail",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "Should Pass_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Should Fail_s",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Should Fail_f",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-alpi/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Should Pass_copy1",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Should Fail_s",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-alpi/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
