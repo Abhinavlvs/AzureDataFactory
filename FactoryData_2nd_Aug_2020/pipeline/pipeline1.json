@@ -23,7 +23,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Should Succeed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -35,6 +42,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"additionalColumns": [
+							{
+								"name": "CopyDate",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
 						"queryTimeout": "02:00:00"
 					},
 					"sink": {
@@ -49,12 +65,20 @@
 						}
 					},
 					"enableStaging": false,
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "analytics/adf"
+					},
+					"validateDataConsistency": true,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
 							{
 								"source": {
-									"name": "ProductID",
+									"name": "CustomerID",
 									"type": "Int32",
 									"physicalType": "int"
 								},
@@ -65,18 +89,18 @@
 							},
 							{
 								"source": {
-									"name": "Name",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "NameStyle",
+									"type": "Boolean",
+									"physicalType": "bit"
 								},
 								"sink": {
-									"type": "String",
+									"type": "Boolean",
 									"ordinal": 2
 								}
 							},
 							{
 								"source": {
-									"name": "ProductNumber",
+									"name": "Title",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
@@ -87,7 +111,7 @@
 							},
 							{
 								"source": {
-									"name": "Color",
+									"name": "FirstName",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
@@ -98,29 +122,29 @@
 							},
 							{
 								"source": {
-									"name": "StandardCost",
-									"type": "Decimal",
-									"physicalType": "money"
+									"name": "MiddleName",
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"type": "Decimal",
+									"type": "String",
 									"ordinal": 5
 								}
 							},
 							{
 								"source": {
-									"name": "ListPrice",
-									"type": "Decimal",
-									"physicalType": "money"
+									"name": "LastName",
+									"type": "String",
+									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"type": "Decimal",
+									"type": "String",
 									"ordinal": 6
 								}
 							},
 							{
 								"source": {
-									"name": "Size",
+									"name": "Suffix",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
@@ -131,90 +155,68 @@
 							},
 							{
 								"source": {
-									"name": "Weight",
-									"type": "Decimal",
-									"physicalType": "decimal"
-								},
-								"sink": {
-									"type": "Decimal",
-									"ordinal": 8
-								}
-							},
-							{
-								"source": {
-									"name": "ProductCategoryID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"type": "Int32",
-									"ordinal": 9
-								}
-							},
-							{
-								"source": {
-									"name": "ProductModelID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"type": "Int32",
-									"ordinal": 10
-								}
-							},
-							{
-								"source": {
-									"name": "SellStartDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"type": "DateTime",
-									"ordinal": 11
-								}
-							},
-							{
-								"source": {
-									"name": "SellEndDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"type": "DateTime",
-									"ordinal": 12
-								}
-							},
-							{
-								"source": {
-									"name": "DiscontinuedDate",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"type": "DateTime",
-									"ordinal": 13
-								}
-							},
-							{
-								"source": {
-									"name": "ThumbNailPhoto",
-									"type": "Byte[]",
-									"physicalType": "varbinary"
-								},
-								"sink": {
-									"type": "Byte[]",
-									"ordinal": 14
-								}
-							},
-							{
-								"source": {
-									"name": "ThumbnailPhotoFileName",
+									"name": "CompanyName",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
 									"type": "String",
-									"ordinal": 15
+									"ordinal": 8
+								}
+							},
+							{
+								"source": {
+									"name": "SalesPerson",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 9
+								}
+							},
+							{
+								"source": {
+									"name": "EmailAddress",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 10
+								}
+							},
+							{
+								"source": {
+									"name": "Phone",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 11
+								}
+							},
+							{
+								"source": {
+									"name": "PasswordHash",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 12
+								}
+							},
+							{
+								"source": {
+									"name": "PasswordSalt",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 13
 								}
 							},
 							{
@@ -225,7 +227,7 @@
 								},
 								"sink": {
 									"type": "Guid",
-									"ordinal": 16
+									"ordinal": 14
 								}
 							},
 							{
@@ -236,7 +238,7 @@
 								},
 								"sink": {
 									"type": "DateTime",
-									"ordinal": 17
+									"ordinal": 15
 								}
 							}
 						],
