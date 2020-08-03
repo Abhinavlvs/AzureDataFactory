@@ -1,0 +1,106 @@
+{
+	"name": "fail_web_act_with_dual_fail_paths",
+	"properties": {
+		"activities": [
+			{
+				"name": "Should Succeed",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/public-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Should Fail",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/pubmlic-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Fail",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Should Fail_copy1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Wait2",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Should Succeed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Should Fail",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Should Fail_copy1",
+				"description": "Calling random URL that doesn't exisit",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://gorest.co.in/pubmlic-api/users?_format=json&access-token=Kej1muvrhFcocwy0f7kfzJWOiSoXEldit_CR",
+					"method": "GET"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
